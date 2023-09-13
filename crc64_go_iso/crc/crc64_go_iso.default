@@ -1,0 +1,7 @@
+.width = 64,
+.input_reflected = 1,
+.result_reflected = 1,
+.polynomial = 0x000000000000001B,
+.initial_value = 0xFFFFFFFFFFFFFFFF,
+.final_xor_value = 0xFFFFFFFFFFFFFFFF,
+.accumulate = 0xFFFFFFFFFFFFFFFF,

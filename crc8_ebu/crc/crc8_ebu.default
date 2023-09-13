@@ -1,0 +1,7 @@
+.width = 8,
+.input_reflected = 1,
+.result_reflected = 1,
+.polynomial = 0x1D,
+.initial_value = 0xFF,
+.final_xor_value = 0x00,
+.accumulate = 0xFF,

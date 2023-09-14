@@ -2,6 +2,7 @@
  * @param algorithm: crc16_maxim
  * @param algorithm_upper: CRC16_MAXIM
  * @param display_width: 4
+ * @param data_width: 16
  * @param width: 16
  * 
  * Copyright (c) 2023-present SKB(skb666@qq.com)
@@ -49,6 +50,7 @@ typedef struct {
     CRC16_MAXIM_NUM_TYPE initial_value;
     CRC16_MAXIM_NUM_TYPE final_xor_value;
     CRC16_MAXIM_NUM_TYPE accumulate;
+    CRC16_MAXIM_NUM_TYPE cast_mask;
 } CRC16_MAXIM;
 
 void crc16_maxim_init(CRC16_MAXIM *crc);

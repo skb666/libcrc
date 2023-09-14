@@ -53,7 +53,7 @@ static CRC16_ARC_NUM_TYPE crc16_arc_calc_reflect(CRC16_ARC *crc, void *data, siz
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc_val & 0xFF) ^ (*value);
-        crc_val >>= 8;
+        crc_val = (crc_val >> 8) & crc->cast_mask;
         crc_val ^= crc16_arc_table[index];
     }
 
@@ -78,9 +78,9 @@ CRC16_ARC_NUM_TYPE crc16_arc_calc(CRC16_ARC *crc, void *data, size_t length) {
             data_xor = *value;
         }
 
-        crc_val ^= data_xor << (crc->width - 8);
+        crc_val = (crc_val ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc_val >> (crc->width - 8)) & 0xFF);
-        crc_val <<= 8;
+        crc_val = (crc_val << 8) & crc->cast_mask;
         crc_val ^= crc16_arc_table[index];
     }
 
@@ -98,7 +98,7 @@ static CRC16_ARC_NUM_TYPE crc16_arc_accum_reflect(CRC16_ARC *crc, void *data, si
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc->accumulate & 0xFF) ^ (*value);
-        crc->accumulate >>= 8;
+        crc->accumulate = (crc->accumulate >> 8) & crc->cast_mask;
         crc->accumulate ^= crc16_arc_table[index];
     }
 
@@ -122,9 +122,9 @@ CRC16_ARC_NUM_TYPE crc16_arc_accum(CRC16_ARC *crc, void *data, size_t length) {
             data_xor = *value;
         }
 
-        crc->accumulate ^= data_xor << (crc->width - 8);
+        crc->accumulate = (crc->accumulate ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc->accumulate >> (crc->width - 8)) & 0xFF);
-        crc->accumulate <<= 8;
+        crc->accumulate = (crc->accumulate << 8) & crc->cast_mask;
         crc->accumulate ^= crc16_arc_table[index];
     }
 

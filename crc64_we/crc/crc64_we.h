@@ -2,6 +2,7 @@
  * @param algorithm: crc64_we
  * @param algorithm_upper: CRC64_WE
  * @param display_width: 16
+ * @param data_width: 64
  * @param width: 64
  * 
  * Copyright (c) 2023-present SKB(skb666@qq.com)
@@ -49,6 +50,7 @@ typedef struct {
     CRC64_WE_NUM_TYPE initial_value;
     CRC64_WE_NUM_TYPE final_xor_value;
     CRC64_WE_NUM_TYPE accumulate;
+    CRC64_WE_NUM_TYPE cast_mask;
 } CRC64_WE;
 
 void crc64_we_init(CRC64_WE *crc);

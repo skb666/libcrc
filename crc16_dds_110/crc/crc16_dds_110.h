@@ -2,6 +2,7 @@
  * @param algorithm: crc16_dds_110
  * @param algorithm_upper: CRC16_DDS_110
  * @param display_width: 4
+ * @param data_width: 16
  * @param width: 16
  * 
  * Copyright (c) 2023-present SKB(skb666@qq.com)
@@ -49,6 +50,7 @@ typedef struct {
     CRC16_DDS_110_NUM_TYPE initial_value;
     CRC16_DDS_110_NUM_TYPE final_xor_value;
     CRC16_DDS_110_NUM_TYPE accumulate;
+    CRC16_DDS_110_NUM_TYPE cast_mask;
 } CRC16_DDS_110;
 
 void crc16_dds_110_init(CRC16_DDS_110 *crc);

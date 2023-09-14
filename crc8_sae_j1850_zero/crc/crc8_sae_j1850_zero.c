@@ -53,7 +53,7 @@ static CRC8_SAE_J1850_ZERO_NUM_TYPE crc8_sae_j1850_zero_calc_reflect(CRC8_SAE_J1
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc_val & 0xFF) ^ (*value);
-        crc_val >>= 8;
+        crc_val = (crc_val >> 8) & crc->cast_mask;
         crc_val ^= crc8_sae_j1850_zero_table[index];
     }
 
@@ -78,9 +78,9 @@ CRC8_SAE_J1850_ZERO_NUM_TYPE crc8_sae_j1850_zero_calc(CRC8_SAE_J1850_ZERO *crc, 
             data_xor = *value;
         }
 
-        crc_val ^= data_xor << (crc->width - 8);
+        crc_val = (crc_val ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc_val >> (crc->width - 8)) & 0xFF);
-        crc_val <<= 8;
+        crc_val = (crc_val << 8) & crc->cast_mask;
         crc_val ^= crc8_sae_j1850_zero_table[index];
     }
 
@@ -98,7 +98,7 @@ static CRC8_SAE_J1850_ZERO_NUM_TYPE crc8_sae_j1850_zero_accum_reflect(CRC8_SAE_J
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc->accumulate & 0xFF) ^ (*value);
-        crc->accumulate >>= 8;
+        crc->accumulate = (crc->accumulate >> 8) & crc->cast_mask;
         crc->accumulate ^= crc8_sae_j1850_zero_table[index];
     }
 
@@ -122,9 +122,9 @@ CRC8_SAE_J1850_ZERO_NUM_TYPE crc8_sae_j1850_zero_accum(CRC8_SAE_J1850_ZERO *crc,
             data_xor = *value;
         }
 
-        crc->accumulate ^= data_xor << (crc->width - 8);
+        crc->accumulate = (crc->accumulate ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc->accumulate >> (crc->width - 8)) & 0xFF);
-        crc->accumulate <<= 8;
+        crc->accumulate = (crc->accumulate << 8) & crc->cast_mask;
         crc->accumulate ^= crc8_sae_j1850_zero_table[index];
     }
 

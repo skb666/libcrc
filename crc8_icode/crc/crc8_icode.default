@@ -5,3 +5,4 @@
 .initial_value = 0xFD,
 .final_xor_value = 0x00,
 .accumulate = 0xFD,
+.cast_mask = 0xFF,

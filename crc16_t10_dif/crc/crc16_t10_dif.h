@@ -2,6 +2,7 @@
  * @param algorithm: crc16_t10_dif
  * @param algorithm_upper: CRC16_T10_DIF
  * @param display_width: 4
+ * @param data_width: 16
  * @param width: 16
  * 
  * Copyright (c) 2023-present SKB(skb666@qq.com)
@@ -49,6 +50,7 @@ typedef struct {
     CRC16_T10_DIF_NUM_TYPE initial_value;
     CRC16_T10_DIF_NUM_TYPE final_xor_value;
     CRC16_T10_DIF_NUM_TYPE accumulate;
+    CRC16_T10_DIF_NUM_TYPE cast_mask;
 } CRC16_T10_DIF;
 
 void crc16_t10_dif_init(CRC16_T10_DIF *crc);

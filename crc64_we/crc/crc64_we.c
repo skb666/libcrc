@@ -53,7 +53,7 @@ static CRC64_WE_NUM_TYPE crc64_we_calc_reflect(CRC64_WE *crc, void *data, size_t
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc_val & 0xFF) ^ (*value);
-        crc_val >>= 8;
+        crc_val = (crc_val >> 8) & crc->cast_mask;
         crc_val ^= crc64_we_table[index];
     }
 
@@ -78,9 +78,9 @@ CRC64_WE_NUM_TYPE crc64_we_calc(CRC64_WE *crc, void *data, size_t length) {
             data_xor = *value;
         }
 
-        crc_val ^= data_xor << (crc->width - 8);
+        crc_val = (crc_val ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc_val >> (crc->width - 8)) & 0xFF);
-        crc_val <<= 8;
+        crc_val = (crc_val << 8) & crc->cast_mask;
         crc_val ^= crc64_we_table[index];
     }
 
@@ -98,7 +98,7 @@ static CRC64_WE_NUM_TYPE crc64_we_accum_reflect(CRC64_WE *crc, void *data, size_
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc->accumulate & 0xFF) ^ (*value);
-        crc->accumulate >>= 8;
+        crc->accumulate = (crc->accumulate >> 8) & crc->cast_mask;
         crc->accumulate ^= crc64_we_table[index];
     }
 
@@ -122,9 +122,9 @@ CRC64_WE_NUM_TYPE crc64_we_accum(CRC64_WE *crc, void *data, size_t length) {
             data_xor = *value;
         }
 
-        crc->accumulate ^= data_xor << (crc->width - 8);
+        crc->accumulate = (crc->accumulate ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc->accumulate >> (crc->width - 8)) & 0xFF);
-        crc->accumulate <<= 8;
+        crc->accumulate = (crc->accumulate << 8) & crc->cast_mask;
         crc->accumulate ^= crc64_we_table[index];
     }
 

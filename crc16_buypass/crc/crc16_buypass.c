@@ -53,7 +53,7 @@ static CRC16_BUYPASS_NUM_TYPE crc16_buypass_calc_reflect(CRC16_BUYPASS *crc, voi
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc_val & 0xFF) ^ (*value);
-        crc_val >>= 8;
+        crc_val = (crc_val >> 8) & crc->cast_mask;
         crc_val ^= crc16_buypass_table[index];
     }
 
@@ -78,9 +78,9 @@ CRC16_BUYPASS_NUM_TYPE crc16_buypass_calc(CRC16_BUYPASS *crc, void *data, size_t
             data_xor = *value;
         }
 
-        crc_val ^= data_xor << (crc->width - 8);
+        crc_val = (crc_val ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc_val >> (crc->width - 8)) & 0xFF);
-        crc_val <<= 8;
+        crc_val = (crc_val << 8) & crc->cast_mask;
         crc_val ^= crc16_buypass_table[index];
     }
 
@@ -98,7 +98,7 @@ static CRC16_BUYPASS_NUM_TYPE crc16_buypass_accum_reflect(CRC16_BUYPASS *crc, vo
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc->accumulate & 0xFF) ^ (*value);
-        crc->accumulate >>= 8;
+        crc->accumulate = (crc->accumulate >> 8) & crc->cast_mask;
         crc->accumulate ^= crc16_buypass_table[index];
     }
 
@@ -122,9 +122,9 @@ CRC16_BUYPASS_NUM_TYPE crc16_buypass_accum(CRC16_BUYPASS *crc, void *data, size_
             data_xor = *value;
         }
 
-        crc->accumulate ^= data_xor << (crc->width - 8);
+        crc->accumulate = (crc->accumulate ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc->accumulate >> (crc->width - 8)) & 0xFF);
-        crc->accumulate <<= 8;
+        crc->accumulate = (crc->accumulate << 8) & crc->cast_mask;
         crc->accumulate ^= crc16_buypass_table[index];
     }
 

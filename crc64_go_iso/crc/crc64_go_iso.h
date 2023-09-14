@@ -2,6 +2,7 @@
  * @param algorithm: crc64_go_iso
  * @param algorithm_upper: CRC64_GO_ISO
  * @param display_width: 16
+ * @param data_width: 64
  * @param width: 64
  * 
  * Copyright (c) 2023-present SKB(skb666@qq.com)
@@ -49,6 +50,7 @@ typedef struct {
     CRC64_GO_ISO_NUM_TYPE initial_value;
     CRC64_GO_ISO_NUM_TYPE final_xor_value;
     CRC64_GO_ISO_NUM_TYPE accumulate;
+    CRC64_GO_ISO_NUM_TYPE cast_mask;
 } CRC64_GO_ISO;
 
 void crc64_go_iso_init(CRC64_GO_ISO *crc);

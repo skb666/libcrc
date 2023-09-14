@@ -53,7 +53,7 @@ static CRC8_DVB_S2_NUM_TYPE crc8_dvb_s2_calc_reflect(CRC8_DVB_S2 *crc, void *dat
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc_val & 0xFF) ^ (*value);
-        crc_val >>= 8;
+        crc_val = (crc_val >> 8) & crc->cast_mask;
         crc_val ^= crc8_dvb_s2_table[index];
     }
 
@@ -78,9 +78,9 @@ CRC8_DVB_S2_NUM_TYPE crc8_dvb_s2_calc(CRC8_DVB_S2 *crc, void *data, size_t lengt
             data_xor = *value;
         }
 
-        crc_val ^= data_xor << (crc->width - 8);
+        crc_val = (crc_val ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc_val >> (crc->width - 8)) & 0xFF);
-        crc_val <<= 8;
+        crc_val = (crc_val << 8) & crc->cast_mask;
         crc_val ^= crc8_dvb_s2_table[index];
     }
 
@@ -98,7 +98,7 @@ static CRC8_DVB_S2_NUM_TYPE crc8_dvb_s2_accum_reflect(CRC8_DVB_S2 *crc, void *da
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc->accumulate & 0xFF) ^ (*value);
-        crc->accumulate >>= 8;
+        crc->accumulate = (crc->accumulate >> 8) & crc->cast_mask;
         crc->accumulate ^= crc8_dvb_s2_table[index];
     }
 
@@ -122,9 +122,9 @@ CRC8_DVB_S2_NUM_TYPE crc8_dvb_s2_accum(CRC8_DVB_S2 *crc, void *data, size_t leng
             data_xor = *value;
         }
 
-        crc->accumulate ^= data_xor << (crc->width - 8);
+        crc->accumulate = (crc->accumulate ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc->accumulate >> (crc->width - 8)) & 0xFF);
-        crc->accumulate <<= 8;
+        crc->accumulate = (crc->accumulate << 8) & crc->cast_mask;
         crc->accumulate ^= crc8_dvb_s2_table[index];
     }
 

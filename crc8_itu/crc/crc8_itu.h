@@ -2,6 +2,7 @@
  * @param algorithm: crc8_itu
  * @param algorithm_upper: CRC8_ITU
  * @param display_width: 2
+ * @param data_width: 8
  * @param width: 8
  * 
  * Copyright (c) 2023-present SKB(skb666@qq.com)
@@ -49,6 +50,7 @@ typedef struct {
     CRC8_ITU_NUM_TYPE initial_value;
     CRC8_ITU_NUM_TYPE final_xor_value;
     CRC8_ITU_NUM_TYPE accumulate;
+    CRC8_ITU_NUM_TYPE cast_mask;
 } CRC8_ITU;
 
 void crc8_itu_init(CRC8_ITU *crc);

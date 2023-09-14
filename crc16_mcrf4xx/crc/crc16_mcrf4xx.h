@@ -2,6 +2,7 @@
  * @param algorithm: crc16_mcrf4xx
  * @param algorithm_upper: CRC16_MCRF4XX
  * @param display_width: 4
+ * @param data_width: 16
  * @param width: 16
  * 
  * Copyright (c) 2023-present SKB(skb666@qq.com)
@@ -49,6 +50,7 @@ typedef struct {
     CRC16_MCRF4XX_NUM_TYPE initial_value;
     CRC16_MCRF4XX_NUM_TYPE final_xor_value;
     CRC16_MCRF4XX_NUM_TYPE accumulate;
+    CRC16_MCRF4XX_NUM_TYPE cast_mask;
 } CRC16_MCRF4XX;
 
 void crc16_mcrf4xx_init(CRC16_MCRF4XX *crc);

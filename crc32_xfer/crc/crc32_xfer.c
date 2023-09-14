@@ -53,7 +53,7 @@ static CRC32_XFER_NUM_TYPE crc32_xfer_calc_reflect(CRC32_XFER *crc, void *data, 
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc_val & 0xFF) ^ (*value);
-        crc_val >>= 8;
+        crc_val = (crc_val >> 8) & crc->cast_mask;
         crc_val ^= crc32_xfer_table[index];
     }
 
@@ -78,9 +78,9 @@ CRC32_XFER_NUM_TYPE crc32_xfer_calc(CRC32_XFER *crc, void *data, size_t length) 
             data_xor = *value;
         }
 
-        crc_val ^= data_xor << (crc->width - 8);
+        crc_val = (crc_val ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc_val >> (crc->width - 8)) & 0xFF);
-        crc_val <<= 8;
+        crc_val = (crc_val << 8) & crc->cast_mask;
         crc_val ^= crc32_xfer_table[index];
     }
 
@@ -98,7 +98,7 @@ static CRC32_XFER_NUM_TYPE crc32_xfer_accum_reflect(CRC32_XFER *crc, void *data,
 
     for (size_t i = 0; i < length; ++value, ++i) {
         index = (crc->accumulate & 0xFF) ^ (*value);
-        crc->accumulate >>= 8;
+        crc->accumulate = (crc->accumulate >> 8) & crc->cast_mask;
         crc->accumulate ^= crc32_xfer_table[index];
     }
 
@@ -122,9 +122,9 @@ CRC32_XFER_NUM_TYPE crc32_xfer_accum(CRC32_XFER *crc, void *data, size_t length)
             data_xor = *value;
         }
 
-        crc->accumulate ^= data_xor << (crc->width - 8);
+        crc->accumulate = (crc->accumulate ^ (data_xor << (crc->width - 8))) & crc->cast_mask;
         index = (uint8_t)((crc->accumulate >> (crc->width - 8)) & 0xFF);
-        crc->accumulate <<= 8;
+        crc->accumulate = (crc->accumulate << 8) & crc->cast_mask;
         crc->accumulate ^= crc32_xfer_table[index];
     }
 

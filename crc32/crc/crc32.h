@@ -2,6 +2,7 @@
  * @param algorithm: crc32
  * @param algorithm_upper: CRC32
  * @param display_width: 8
+ * @param data_width: 32
  * @param width: 32
  * 
  * Copyright (c) 2023-present SKB(skb666@qq.com)
@@ -49,6 +50,7 @@ typedef struct {
     CRC32_NUM_TYPE initial_value;
     CRC32_NUM_TYPE final_xor_value;
     CRC32_NUM_TYPE accumulate;
+    CRC32_NUM_TYPE cast_mask;
 } CRC32;
 
 void crc32_init(CRC32 *crc);

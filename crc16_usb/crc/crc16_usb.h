@@ -2,6 +2,7 @@
  * @param algorithm: crc16_usb
  * @param algorithm_upper: CRC16_USB
  * @param display_width: 4
+ * @param data_width: 16
  * @param width: 16
  * 
  * Copyright (c) 2023-present SKB(skb666@qq.com)
@@ -49,6 +50,7 @@ typedef struct {
     CRC16_USB_NUM_TYPE initial_value;
     CRC16_USB_NUM_TYPE final_xor_value;
     CRC16_USB_NUM_TYPE accumulate;
+    CRC16_USB_NUM_TYPE cast_mask;
 } CRC16_USB;
 
 void crc16_usb_init(CRC16_USB *crc);

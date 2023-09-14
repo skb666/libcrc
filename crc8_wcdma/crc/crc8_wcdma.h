@@ -2,6 +2,7 @@
  * @param algorithm: crc8_wcdma
  * @param algorithm_upper: CRC8_WCDMA
  * @param display_width: 2
+ * @param data_width: 8
  * @param width: 8
  * 
  * Copyright (c) 2023-present SKB(skb666@qq.com)
@@ -49,6 +50,7 @@ typedef struct {
     CRC8_WCDMA_NUM_TYPE initial_value;
     CRC8_WCDMA_NUM_TYPE final_xor_value;
     CRC8_WCDMA_NUM_TYPE accumulate;
+    CRC8_WCDMA_NUM_TYPE cast_mask;
 } CRC8_WCDMA;
 
 void crc8_wcdma_init(CRC8_WCDMA *crc);

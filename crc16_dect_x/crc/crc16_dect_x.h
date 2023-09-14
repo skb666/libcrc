@@ -2,6 +2,7 @@
  * @param algorithm: crc16_dect_x
  * @param algorithm_upper: CRC16_DECT_X
  * @param display_width: 4
+ * @param data_width: 16
  * @param width: 16
  * 
  * Copyright (c) 2023-present SKB(skb666@qq.com)
@@ -49,6 +50,7 @@ typedef struct {
     CRC16_DECT_X_NUM_TYPE initial_value;
     CRC16_DECT_X_NUM_TYPE final_xor_value;
     CRC16_DECT_X_NUM_TYPE accumulate;
+    CRC16_DECT_X_NUM_TYPE cast_mask;
 } CRC16_DECT_X;
 
 void crc16_dect_x_init(CRC16_DECT_X *crc);

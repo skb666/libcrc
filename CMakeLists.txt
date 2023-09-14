@@ -22,3 +22,15 @@ enable_testing()
 
 set(LIBCRC_DIR libcrc)
 include(${LIBCRC_DIR}/libcrc.cmake)
+
+file(GLOB EXAMPLE_SRCS "src/*.c")
+add_executable(example ${EXAMPLE_SRCS})
+target_include_directories(example PRIVATE inc)
+target_link_libraries(example PRIVATE crc_all)
+
+add_custom_command(
+    TARGET example POST_BUILD
+    COMMAND ./example
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/bin
+)
+
